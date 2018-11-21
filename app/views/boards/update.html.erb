@@ -1,0 +1,13 @@
+<h2><%=@one.id%>번 글 수정</h2>
+<form action="/boards/update_at/<%=@one.id%>" method="post">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">제목</label>
+    <input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="<%=@one.title%>">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">내용</label>
+    <textarea type="text" class="form-control" name="content" id="exampleFormControlTextarea1" line-height="4"><%=@one.content%></textarea>
+  </div>
+  <button type="submit" class="btn btn-info">수정하기</button>
+</form>
+<a href="/boards/list"><button type="submit" class="btn btn-info">취소하기</button></a>

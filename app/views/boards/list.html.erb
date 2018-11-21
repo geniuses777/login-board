@@ -1,0 +1,100 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">작성한 시간</th>
+      <th scope="col">수정하기</th>
+      <th scope="col">삭제하기</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all.each do |p| %>
+    <tr>
+      <th scope="row"><%=p.id%></th>
+      <td><a href="/boards/show/<%=p.id%>"><%=p.title%></a></td>
+      <td><%=p.user%></td>
+      <td><%=p.created_at%></td>
+      <% if user_signed_in? %>
+      <td><a href="/boards/update/<%=p.id%>">[수정하기]</a></td>
+      <% elsif @message!=true %>
+        <td><a href="/boards/update/<%=p.id%>" data-toggle="modal" data-target="#exampleModal">[수정하기]</a></td>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">경고 메시지</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              작성자가 아닙니다.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <a href="/users/sign_in"><button type="button" class="btn btn-primary">로그인 하러가기</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Button trigger modal -->
+      <% else %>
+      <td><a href="/boards/update/<%=p.id%>" data-toggle="modal" data-target="#exampleModal">[수정하기]</a></td>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">경고 메시지</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              로그인 해야합니다.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <a href="/users/sign_in"><button type="button" class="btn btn-primary">로그인 하러가기</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <td><a href="/boards/delete/<%=p.id%>" data-method="post">[삭제하기]</a></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  글 작성하기
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">경고 메시지</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        로그인 해야합니다.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="/users/sign_in"><button type="button" class="btn btn-primary">로그인 하러가기</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+<% if user_signed_in? %>
+현재 로그인한 아이디: <%=current_user.name%>
+<a href="/users/sign_out">로그아웃</a>
+<% end %>
+<%=@message%>
